@@ -1,0 +1,12 @@
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+
+     # build the application image
+     - run: docker build -t govau/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_BRANCH} .
+
+     # Test openstack cli in the image works
+     - run: docker run -it --rm govau/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_BRANCH} openstack --version
